@@ -23,6 +23,7 @@ export const FileUpload = ({ onChange, value, endpoint }: FileUploadProps) => {
           alt="Upload"
           className="rounded-full object-cover"
         />
+        {/* clear image ================================================ */}
         <button
           onClick={() => onChange("")}
           className="bg-rose-500 text-white p-1 rounded-full absolute top-0 right-0 shadow-sm hover:bg-rose-800"

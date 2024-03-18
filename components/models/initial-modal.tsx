@@ -25,6 +25,8 @@ import { useEffect, useState } from "react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { FileUpload } from "../file-upload";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 // validation =============================================
 const formSchema = z.object({
@@ -40,6 +42,11 @@ const formSchema = z.object({
 export const InitialModal = () => {
   const [isMounted, setIsMounted] = useState(false);
 
+  const router = useRouter();
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -50,13 +57,17 @@ export const InitialModal = () => {
 
   const isLoading = form.formState.isSubmitting;
 
+  // create server =====================================
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+    try {
+      await axios.post("/api/servers", values);
+      form.reset();
+      router.refresh();
+      window.location.reload();
+    } catch (error) {
+      console.log(error);
+    }
   };
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
 
   if (!isMounted) return null;
   // ======================================
@@ -75,6 +86,7 @@ export const InitialModal = () => {
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             <div className="space-y-8 px-6">
               <div className="flex items-center justify-center text-center">
+                {/* server image dropzone =========================================== */}
                 <FormField
                   control={form.control}
                   name="imageUrl"
@@ -92,6 +104,7 @@ export const InitialModal = () => {
                   )}
                 />
               </div>
+              {/* server name field ============================== */}
               <FormField
                 control={form.control}
                 name="name"
