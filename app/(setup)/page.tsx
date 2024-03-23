@@ -1,6 +1,7 @@
 import { InitialModal } from "@/components/models/initial-modal";
 import { db } from "@/lib/db";
 import { initialProfile } from "@/lib/initial-profile";
+import { UserButton } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 
 const SetupPage = async () => {

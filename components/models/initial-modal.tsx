@@ -27,6 +27,7 @@ import { Button } from "../ui/button";
 import { FileUpload } from "../file-upload";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { SignOutButton } from "@clerk/nextjs";
 
 // validation =============================================
 const formSchema = z.object({
@@ -127,9 +128,14 @@ export const InitialModal = () => {
               />
             </div>
             <DialogFooter className="bg-gray-100 px-6 py-4">
-              <Button disabled={isLoading} variant="primary">
-                Create
-              </Button>
+              <div className="flex justify-between w-full">
+                <Button variant="ghost" type="button">
+                  <SignOutButton />
+                </Button>
+                <Button disabled={isLoading} variant="primary">
+                  Create
+                </Button>
+              </div>
             </DialogFooter>
           </form>
         </Form>
